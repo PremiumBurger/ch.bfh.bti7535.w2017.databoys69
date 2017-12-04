@@ -1,6 +1,7 @@
 package ch.bfh.bti7535.w2017.databoys69.algorithm;
 
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.core.Instances;
 import weka.filters.Filter;
@@ -49,15 +50,14 @@ public class DataboysNaiveBayes implements Runnable {
             Instances test = new Instances(new BufferedReader(new FileReader(testData)));
             test.setClassIndex(lastIndex);
             filter.setInputFormat(test);
-            Instances test2 = Filter.useFilter(test, filter);
 
             naive.buildClassifier(train);
-            for(int i=0; i<test2.numInstances(); i++) {
-                System.out.println(test.instance(i));
-                double index = naive.classifyInstance(test2.instance(i));
-                String className = train.attribute(0).value((int)index);
-                System.out.println(className);
-            }
+
+            Evaluation eval = new Evaluation(train);
+            eval.evaluateModel(naive, test);
+            String strSummary = eval.toSummaryString();
+            System.out.println(strSummary);
+
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
