@@ -10,14 +10,14 @@ import java.nio.file.Paths;
 
 public class OpenNLPNaiveBayes {
 
+    private String _modelPath = ".\\trainedModel.bin";
 
-
-    public static void doStuff(File trainingData, File testData)
+    public void train(File data)
     {
         DoccatModel model;
         InputStreamFactory dataIn;
         try {
-            dataIn = new MarkableFileInputStreamFactory(trainingData);
+            dataIn = new MarkableFileInputStreamFactory(data);
             ObjectStream<String> lineStream =
                     new PlainTextByLineStream(dataIn, "UTF-8");
             ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
@@ -33,17 +33,33 @@ public class OpenNLPNaiveBayes {
             // that we train a Naive Bayes model instead
             model = DocumentCategorizerME.train("en", sampleStream, params, factory);
             // Comment in if you want to export the model for later use
-            // BufferedOutputStream modelOut = new BufferedOutputStream(new FileOutputStream("C:\\Users\\liwan\\Documents\\classifier-naive-bayes.bin"));
-            // model.serialize(modelOut);
+            BufferedOutputStream modelOut = new BufferedOutputStream(new FileOutputStream(_modelPath));
+            model.serialize(modelOut);
 
             DocumentCategorizer docCat = new DocumentCategorizerME(model);
-
-            // Todo -> test the trained data
         }
         catch (IOException e) {
             // Failed to read or parse training data, training failed
             e.printStackTrace();
         }
+    }
+
+    public void test(String cat, String content) throws IOException {
+        InputStream stream = new FileInputStream(_modelPath);
+        DoccatModel model = new DoccatModel(stream);
+        DocumentCategorizerME docCat = new DocumentCategorizerME(model);
+        DocumentCategorizerEvaluator evaluator = new DocumentCategorizerEvaluator(docCat);
+
+        DocumentSample sample = new DocumentSample(cat, content.split(" "));
+        double[] catProbability = docCat.categorize(content.split(" "));
+        String category = docCat.getBestCategory(catProbability);
+
+        evaluator.evaluateSample(sample);
+
+        double accuracy = evaluator.getAccuracy();
+        System.out.println("Category predication: " + category);
+        System.out.println("Accuracy: " + accuracy);
+
     }
 
 }
