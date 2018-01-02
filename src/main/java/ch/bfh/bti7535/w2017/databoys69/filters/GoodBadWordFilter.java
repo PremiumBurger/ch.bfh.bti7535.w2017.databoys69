@@ -24,7 +24,7 @@ public class GoodBadWordFilter extends SimpleBatchFilter {
     @Override
     protected Instances determineOutputFormat(Instances inputFormat) throws Exception {
         Instances result = new Instances(inputFormat, 0);
-        result.insertAttributeAt(new Attribute("bla"), result.numAttributes());
+        result.insertAttributeAt(new Attribute("test"), result.numAttributes());
         return result;
     }
 
@@ -41,6 +41,7 @@ public class GoodBadWordFilter extends SimpleBatchFilter {
                 double value = instance.value(attrIndex);
                 System.out.println("attribute: " + name + " value: " + value);
             }
+            result.add(instance);
         }
         return result;
     }
