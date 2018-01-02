@@ -20,12 +20,7 @@ public class DataboysEvaluator {
 
     public void evaluate(Classifier classifier, Instances dataSet) throws Exception {
         Evaluation eval = new Evaluation(dataSet);
-
-        // FilteredClassifier filteredClassifier = new FilteredClassifier();
-        // filteredClassifier.setClassifier(classifier);
-        // filteredClassifier.setFilter(new StringToWordVector());
-
-        eval.crossValidateModel(classifier, dataSet, folds, new Random(1));
+        eval.crossValidateModel(classifier, dataSet, folds, new Random());
         eval.evaluateModel(classifier, dataSet);
         System.out.println("Summary: " + eval.toSummaryString());
     }
