@@ -38,7 +38,7 @@ public class DataboysNaiveBayes implements Runnable {
             // classifier
             Classifier naive = new NaiveBayes();
 
-            //training data
+            // training data
             Instances train = new Instances(new BufferedReader(new FileReader(dataSet)));
             int lastIndex = train.numAttributes() - 1;
             train.setClassIndex(lastIndex);
