@@ -30,5 +30,10 @@
       <artifactId>opennlp-tools</artifactId>
       <version>1.8.3</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.fracpete</groupId>
+      <artifactId>snowball-stemmers-weka-package</artifactId>
+      <version>1.0.0</version>
+    </dependency>
   </dependencies>
 </project>

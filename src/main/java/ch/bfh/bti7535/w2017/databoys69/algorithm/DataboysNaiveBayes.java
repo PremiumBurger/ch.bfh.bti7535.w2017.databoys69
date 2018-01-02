@@ -1,33 +1,33 @@
 package ch.bfh.bti7535.w2017.databoys69.algorithm;
 
+import ch.bfh.bti7535.w2017.databoys69.evaluation.DataboysEvaluator;
+import ch.bfh.bti7535.w2017.databoys69.filters.DataboysFilterFactory;
+import ch.bfh.bti7535.w2017.databoys69.filters.DataboysStopWordHandler;
 import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.core.Instances;
+import weka.core.stemmers.SnowballStemmer;
 import weka.filters.Filter;
+import weka.filters.MultiFilter;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataboysNaiveBayes implements Runnable {
 
-    private File trainingData;
 
-    private File testData;
+    private File dataSet;
 
     /**
      * Creates an Instance of a @{@link DataboysNaiveBayes} algorithm
-     * @param trainingData the training data file in the <code>.arff</code> format
-     * @param testData the test data file in the <code>.arff</code> format
      */
-    public DataboysNaiveBayes(File trainingData, File testData) {
-        CheckExistsAndNotNull(trainingData);
-        CheckExistsAndNotNull(testData);
-
-        this.trainingData = trainingData;
-        this.testData = testData;
+    public DataboysNaiveBayes(File inputFile) {
+        CheckExistsAndNotNull(inputFile);
+        this.dataSet = inputFile;
     }
 
     /**
@@ -35,32 +35,51 @@ public class DataboysNaiveBayes implements Runnable {
      */
     public void run() {
         try {
-            //filter
-            StringToWordVector filter = new StringToWordVector();
+            // classifier
             Classifier naive = new NaiveBayes();
 
             //training data
-            Instances train = new Instances(new BufferedReader(new FileReader(trainingData)));
+            Instances train = new Instances(new BufferedReader(new FileReader(dataSet)));
             int lastIndex = train.numAttributes() - 1;
             train.setClassIndex(lastIndex);
-            filter.setInputFormat(train);
-            train = Filter.useFilter(train, filter);
 
-            //testing data
-            Instances test = new Instances(new BufferedReader(new FileReader(testData)));
-            test.setClassIndex(lastIndex);
-            filter.setInputFormat(test);
+            // filter
+            List<Filter> filters = new ArrayList<>();
+            filters.add(DataboysFilterFactory.buildStopwordFilter(train));
+            filters.add(DataboysFilterFactory.buildSnowballStemFilter(train));
 
+            MultiFilter multiFilter = new MultiFilter();
+            Filter[] filterArray = new Filter[filters.size()];
+            filterArray = filters.toArray(filterArray);
+            multiFilter.setFilters(filterArray);
+            multiFilter.setInputFormat(train);
+            train = Filter.useFilter(train, multiFilter);
+
+            // build classifier
             naive.buildClassifier(train);
 
-            Evaluation eval = new Evaluation(train);
-            eval.evaluateModel(naive, test);
-            String strSummary = eval.toSummaryString();
-            System.out.println(strSummary);
+            // evaluate
+            DataboysEvaluator evaluator = new DataboysEvaluator(10);
+            evaluator.evaluate(naive, train);
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    private StringToWordVector buildStemAndStopwordFilter(Instances train) throws Exception {
+        // apply filters
+        StringToWordVector filter = new StringToWordVector();
+        filter.setInputFormat(train);
+
+        // stopword filter
+        DataboysStopWordHandler stopWordHandler = new DataboysStopWordHandler();
+        filter.setStopwordsHandler(stopWordHandler);
+
+        // stemmer
+        SnowballStemmer snowballStemmer = new SnowballStemmer();
+        filter.setStemmer(snowballStemmer);
+        return filter;
     }
 
     private void CheckExistsAndNotNull(File file) {
