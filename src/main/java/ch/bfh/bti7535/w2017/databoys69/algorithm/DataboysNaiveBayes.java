@@ -47,6 +47,7 @@ public class DataboysNaiveBayes implements Runnable {
             List<Filter> filters = new ArrayList<>();
             filters.add(DataboysFilterFactory.buildStopwordFilter(train));
             filters.add(DataboysFilterFactory.buildSnowballStemFilter(train));
+            filters.add(DataboysFilterFactory.buildGoodBadWordFilter(train));
 
             MultiFilter multiFilter = new MultiFilter();
             Filter[] filterArray = new Filter[filters.size()];
@@ -65,21 +66,6 @@ public class DataboysNaiveBayes implements Runnable {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    private StringToWordVector buildStemAndStopwordFilter(Instances train) throws Exception {
-        // apply filters
-        StringToWordVector filter = new StringToWordVector();
-        filter.setInputFormat(train);
-
-        // stopword filter
-        DataboysStopWordHandler stopWordHandler = new DataboysStopWordHandler();
-        filter.setStopwordsHandler(stopWordHandler);
-
-        // stemmer
-        SnowballStemmer snowballStemmer = new SnowballStemmer();
-        filter.setStemmer(snowballStemmer);
-        return filter;
     }
 
     private void CheckExistsAndNotNull(File file) {
