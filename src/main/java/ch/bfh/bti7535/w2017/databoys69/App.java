@@ -1,5 +1,6 @@
 package ch.bfh.bti7535.w2017.databoys69;
 
+import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysBaseLine;
 import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysNaiveBayes;
 
 import java.io.File;
@@ -25,6 +26,10 @@ public class App {
         // load resource file
         ClassLoader classLoader = new App().getClass().getClassLoader();
         File file = new File(classLoader.getResource("movie-reviews.arff").getFile());
+
+        // launch baseline
+        DataboysBaseLine baseLine = new DataboysBaseLine(file);
+        baseLine.run();
 
         // launch Naive Bayes
         DataboysNaiveBayes bayes = new DataboysNaiveBayes(file);
