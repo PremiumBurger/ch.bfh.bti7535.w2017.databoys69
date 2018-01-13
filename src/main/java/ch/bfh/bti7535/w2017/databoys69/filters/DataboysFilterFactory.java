@@ -15,6 +15,7 @@ public class DataboysFilterFactory {
         vector.setStemmer(new NullStemmer());
         vector.setInputFormat(train);
         vector.setAttributeIndices("first");
+        vector.setWordsToKeep(3000);
         return vector;
     }
 
@@ -24,5 +25,11 @@ public class DataboysFilterFactory {
         selectionFilter.setEvaluator(new ClassifierAttributeEval());
         selectionFilter.setSearch(new Ranker());
         return selectionFilter;
+    }
+
+    public static Filter buildSentimentLexiconFilter(Instances instances) throws Exception {
+        DataboysSentimentLexiconFilter lexiconFilter = new DataboysSentimentLexiconFilter();
+        lexiconFilter.setInputFormat(instances);
+        return lexiconFilter;
     }
 }
