@@ -3,21 +3,33 @@ package ch.bfh.bti7535.w2017.databoys69.algorithm;
 import opennlp.tools.doccat.*;
 import opennlp.tools.ml.naivebayes.NaiveBayesTrainer;
 import opennlp.tools.util.*;
+import weka.core.Instances;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.StringTokenizer;
 
 public class OpenNLPNaiveBayes {
 
     private String _modelPath = ".\\trainedModel.bin";
 
-    public void train(File data)
+    /**
+     * Train the Naive bayes
+     */
+    public void train()
     {
+        // load training file
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        File trainingData = new File(classLoader.getResource("openNLP_training.txt").getFile());
+
         DoccatModel model;
         InputStreamFactory dataIn;
         try {
-            dataIn = new MarkableFileInputStreamFactory(data);
+            dataIn = new MarkableFileInputStreamFactory(trainingData);
             ObjectStream<String> lineStream =
                     new PlainTextByLineStream(dataIn, "UTF-8");
             ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
@@ -35,8 +47,6 @@ public class OpenNLPNaiveBayes {
             // Comment in if you want to export the model for later use
             BufferedOutputStream modelOut = new BufferedOutputStream(new FileOutputStream(_modelPath));
             model.serialize(modelOut);
-
-            DocumentCategorizer docCat = new DocumentCategorizerME(model);
         }
         catch (IOException e) {
             // Failed to read or parse training data, training failed
@@ -44,21 +54,37 @@ public class OpenNLPNaiveBayes {
         }
     }
 
-    public void test(String cat, String content) throws IOException {
-        InputStream stream = new FileInputStream(_modelPath);
-        DoccatModel model = new DoccatModel(stream);
-        DocumentCategorizerME docCat = new DocumentCategorizerME(model);
-        DocumentCategorizerEvaluator evaluator = new DocumentCategorizerEvaluator(docCat);
+    public void test(File dataSet) {
+        try {
+            Instances data = new Instances(new BufferedReader(new FileReader(dataSet)));
 
-        DocumentSample sample = new DocumentSample(cat, content.split(" "));
-        double[] catProbability = docCat.categorize(content.split(" "));
-        String category = docCat.getBestCategory(catProbability);
+            // Init evaluator
+            InputStream stream = new FileInputStream(_modelPath);
+            DoccatModel model = new DoccatModel(stream);
+            DocumentCategorizerME docCat = new DocumentCategorizerME(model);
+            DocumentCategorizerEvaluator evaluator = new DocumentCategorizerEvaluator(docCat);
 
-        evaluator.evaluateSample(sample);
+            // Evaluate each review
+            for (int i = 0; i < 2000; i++) {
+                String review = data.get(i).stringValue(0);
+                String intention = data.get(i).stringValue(1);
+                StringTokenizer tokenizer = new StringTokenizer(review);
+                ArrayList<String> tokens = new ArrayList<>();
+                while (tokenizer.hasMoreTokens()){
+                    tokens.add(tokenizer.nextToken());
+                }
 
-        double accuracy = evaluator.getAccuracy();
-        System.out.println("Category predication: " + category);
-        System.out.println("Accuracy: " + accuracy);
+                DocumentSample sample = new DocumentSample(intention, tokens.stream().toArray(String[]::new));
+                evaluator.evaluateSample(sample);
+            }
+
+            System.out.println("*** DATABOYS 69 OPEN NLP NAIVE BAYES ***");
+            System.out.println("Number of documents: " + evaluator.getDocumentCount());
+            System.out.println("Accuracy: " + (evaluator.getAccuracy() * 100));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
