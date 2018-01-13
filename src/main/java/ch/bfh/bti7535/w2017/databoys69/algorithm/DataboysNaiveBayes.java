@@ -15,8 +15,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author databoys69
+ * Implementation of a Naive Bayes algorithm to classify movie
+ * reviews into positive or negative.
+ */
 public class DataboysNaiveBayes implements Runnable {
-
 
     private File dataSet;
 
@@ -71,6 +75,10 @@ public class DataboysNaiveBayes implements Runnable {
         }
     }
 
+    /**
+     * Ends process if the file doesn't exist
+     * @param file arff file
+     */
     private void CheckExistsAndNotNull(File file) {
         if (file == null || !file.exists()) {
             throw new IllegalArgumentException("File must exists and must not be null");

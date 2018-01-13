@@ -5,9 +5,11 @@ import opennlp.tools.ml.naivebayes.NaiveBayesTrainer;
 import opennlp.tools.util.*;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
+/**
+ * @author databoys69
+ * Implementation of a Naive Bayes algorithm with the OpenNLP library
+ */
 public class OpenNLPNaiveBayes {
 
     private String _modelPath = ".\\trainedModel.bin";
