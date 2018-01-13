@@ -33,10 +33,13 @@ public class DataboysBaseLine implements Runnable {
      * ones.
      */
     public void run() {
-
+        FileReader fReader = null;
+        BufferedReader bReader = null;
         try {
 
-            Instances data = new Instances(new BufferedReader(new FileReader(dataSet)));
+            fReader = new FileReader(dataSet);
+            bReader = new BufferedReader(fReader);
+            Instances data = new Instances(bReader);
 
             double numberOfReviews = 0;
             double numberOfCorrectClassifiedReviews = 0;
@@ -87,6 +90,13 @@ public class DataboysBaseLine implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                bReader.close();
+                fReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
