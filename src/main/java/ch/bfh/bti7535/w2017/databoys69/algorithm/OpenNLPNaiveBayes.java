@@ -59,8 +59,14 @@ public class OpenNLPNaiveBayes {
      * @param dataSet
      */
     public void test(File dataSet) {
+
+        FileReader fReader = null;
+        BufferedReader bReader = null;
         try {
-            Instances data = new Instances(new BufferedReader(new FileReader(dataSet)));
+
+            fReader = new FileReader(dataSet);
+            bReader = new BufferedReader(fReader);
+            Instances data = new Instances(bReader);
 
             // Init evaluator
             InputStream stream = new FileInputStream(_modelPath);
@@ -87,6 +93,13 @@ public class OpenNLPNaiveBayes {
             System.out.println("Accuracy: " + (evaluator.getAccuracy() * 100));
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                bReader.close();
+                fReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

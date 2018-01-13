@@ -32,7 +32,7 @@ public class App {
         openNLPNaiveBayes.test(file);
 
         // launch Naive Bayes
-        //DataboysNaiveBayes bayes = new DataboysNaiveBayes(file);
-        //bayes.run();
+        DataboysNaiveBayes bayes = new DataboysNaiveBayes(file);
+        bayes.run();
     }
 }

@@ -26,10 +26,13 @@ public class DataboysBaseLine implements Runnable {
      * Runs Databoys Baseline algorithm
      */
     public void run() {
-
+        FileReader fReader = null;
+        BufferedReader bReader = null;
         try {
 
-            Instances data = new Instances(new BufferedReader(new FileReader(dataSet)));
+            fReader = new FileReader(dataSet);
+            bReader = new BufferedReader(fReader);
+            Instances data = new Instances(bReader);
 
             double numberOfReviews = 0;
             double numberOfCorrectClassifiedReviews = 0;
@@ -75,16 +78,14 @@ public class DataboysBaseLine implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                bReader.close();
+                fReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        // 1. load resource file (movie-reviews.csv)
-
-        // 1.a create positiv / negativ word
-
-        // 2. loop over each entry
-
-        // 3. count sentiment words
-
     }
 
     private void CheckExistsAndNotNull(File file) {
