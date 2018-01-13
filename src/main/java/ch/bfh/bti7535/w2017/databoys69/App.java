@@ -1,20 +1,11 @@
 package ch.bfh.bti7535.w2017.databoys69;
 
 import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysBaseLine;
-import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysNaiveBayes;
-
-import java.io.File;
-
+import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysBaseLineWeighted;
 import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysNaiveBayes;
 import ch.bfh.bti7535.w2017.databoys69.algorithm.OpenNLPNaiveBayes;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.io.File;
 
 /**
  * Hello world!
@@ -31,8 +22,17 @@ public class App {
         DataboysBaseLine baseLine = new DataboysBaseLine(file);
         baseLine.run();
 
+        // launch weighted baseline
+        DataboysBaseLineWeighted baseLineWeighted = new DataboysBaseLineWeighted(file);
+        baseLineWeighted.run();
+
+        // launch open nlp
+        OpenNLPNaiveBayes openNLPNaiveBayes = new OpenNLPNaiveBayes();
+        openNLPNaiveBayes.train();
+        openNLPNaiveBayes.test(file);
+
         // launch Naive Bayes
-        DataboysNaiveBayes bayes = new DataboysNaiveBayes(file);
-        bayes.run();
+        //DataboysNaiveBayes bayes = new DataboysNaiveBayes(file);
+        //bayes.run();
     }
 }
