@@ -81,11 +81,12 @@ public class DataboysBaseLine implements Runnable {
             // print results
             double percentage = (numberOfCorrectClassifiedReviews / numberOfReviews) * 100;
             System.out.println("*** BASELINE ALGORITHM ***");
+            System.out.println();
             System.out.println("Number of reviews: " + (int)numberOfReviews);
             System.out.println("Number of correct classified reviews: " + (int)numberOfCorrectClassifiedReviews);
             System.out.println("Accuracy: " + percentage + "%");
-            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
             System.out.println();
+            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
             System.out.println();
 
         } catch (IOException e) {

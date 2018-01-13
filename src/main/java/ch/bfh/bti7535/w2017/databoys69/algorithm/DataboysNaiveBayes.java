@@ -5,7 +5,6 @@ import ch.bfh.bti7535.w2017.databoys69.filters.DataboysFilterFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayesMultinomial;
 import weka.core.Instances;
-import weka.core.converters.ArffSaver;
 import weka.filters.Filter;
 import weka.filters.MultiFilter;
 

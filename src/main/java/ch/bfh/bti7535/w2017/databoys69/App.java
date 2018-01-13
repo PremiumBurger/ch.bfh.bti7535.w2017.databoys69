@@ -8,8 +8,9 @@ import ch.bfh.bti7535.w2017.databoys69.algorithm.OpenNLPNaiveBayes;
 import java.io.File;
 
 /**
- * Hello world!
- *
+ * @author databoys69
+ * Compares the efficiency of several algorithms for classifying
+ * movie reviews into positive or negative reviews.
  */
 public class App {
     public static void main( String[] args ) {

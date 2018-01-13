@@ -35,10 +35,11 @@ public class DataboysEvaluator {
         eval.crossValidateModel(classifier, dataSet, folds, new Random());
         eval.evaluateModel(classifier, dataSet);
 
-        System.out.println("*** NAIVE BAYES ALGORITHM ***");
-        System.out.println("Summary: " + eval.toSummaryString());
-        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        System.out.println("*** NAIVE BAYES (WEKA) ALGORITHM ***");
         System.out.println();
+        System.out.println("Summary: " + eval.toSummaryString());
+        System.out.println();
+        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
         System.out.println();
     }
 }

@@ -88,11 +88,12 @@ public class OpenNLPNaiveBayes {
                 evaluator.evaluateSample(sample);
             }
 
-            System.out.println("*** DATABOYS 69 OPEN NLP NAIVE BAYES ***");
-            System.out.println("Number of documents: " + evaluator.getDocumentCount());
-            System.out.println("Accuracy: " + (evaluator.getAccuracy() * 100));
-            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+            System.out.println("*** NAIVE BAYES (OpenNLP) ALGORITHM ***");
             System.out.println();
+            System.out.println("Number of reviews: " + evaluator.getDocumentCount());
+            System.out.println("Accuracy: " + (evaluator.getAccuracy() * 100));
+            System.out.println();
+            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
             System.out.println();
         } catch (Exception e) {
             e.printStackTrace();

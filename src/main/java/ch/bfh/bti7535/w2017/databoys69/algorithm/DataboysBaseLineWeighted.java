@@ -72,12 +72,13 @@ public class DataboysBaseLineWeighted implements Runnable {
 
             // show results
             double percentage = (numberOfCorrectClassifiedReviews / numberOfReviews) * 100;
-            System.out.println("*** DATABOYS 69 WEIGHTED BASELINE ***");
-            System.out.println("Number of reviews: " + numberOfReviews);
-            System.out.println("Number of correct classified reviews: " + numberOfCorrectClassifiedReviews);
-            System.out.println("Accuracy: " + percentage + "%");
-            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+            System.out.println("*** WEIGHTED BASELINE ALGORITHM ***");
             System.out.println();
+            System.out.println("Number of reviews: " + (int)numberOfReviews);
+            System.out.println("Number of correct classified reviews: " + (int)numberOfCorrectClassifiedReviews);
+            System.out.println("Accuracy: " + percentage + "%");
+            System.out.println();
+            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
             System.out.println();
 
         } catch (IOException e) {
@@ -92,6 +93,10 @@ public class DataboysBaseLineWeighted implements Runnable {
         }
     }
 
+    /**
+     * Ends process if the file doesn't exist
+     * @param file arff file
+     */
     private void CheckExistsAndNotNull(File file) {
         if (file == null || !file.exists()) {
             throw new IllegalArgumentException("File must exists and must not be null");
