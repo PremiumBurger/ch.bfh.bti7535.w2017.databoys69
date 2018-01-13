@@ -54,6 +54,10 @@ public class OpenNLPNaiveBayes {
         }
     }
 
+    /**
+     * test the accuracy
+     * @param dataSet
+     */
     public void test(File dataSet) {
         try {
             Instances data = new Instances(new BufferedReader(new FileReader(dataSet)));
@@ -84,8 +88,5 @@ public class OpenNLPNaiveBayes {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
-
 }
