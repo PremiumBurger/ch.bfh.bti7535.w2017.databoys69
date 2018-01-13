@@ -44,7 +44,7 @@ public class DataboysNaiveBayes implements Runnable {
             // filter
             List<Filter> filters = new ArrayList<>();
             filters.add(DataboysFilterFactory.buildStringToVectorFilter(train));
-            filters.add(DataboysFilterFactory.buildSentimentLexiconFilter(train));
+            // filters.add(DataboysFilterFactory.buildSentimentLexiconFilter(train));
 
             MultiFilter multiFilter = new MultiFilter();
             Filter[] filterArray = new Filter[filters.size()];
@@ -54,7 +54,6 @@ public class DataboysNaiveBayes implements Runnable {
             train = Filter.useFilter(train, multiFilter);
 
             train = Filter.useFilter(train, DataboysFilterFactory.buildAttributeSelectionFilter(train));
-
 
             ArffSaver saver = new ArffSaver();
             saver.setInstances(train);
