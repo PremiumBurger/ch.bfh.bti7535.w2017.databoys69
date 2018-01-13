@@ -82,6 +82,8 @@ public class DataboysBaseLine implements Runnable {
             System.out.println("Number of correct classified reviews: " + (int)numberOfCorrectClassifiedReviews);
             System.out.println("Accuracy: " + percentage + "%");
             System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+            System.out.println();
+            System.out.println();
 
         } catch (IOException e) {
             e.printStackTrace();

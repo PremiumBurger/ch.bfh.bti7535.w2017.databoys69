@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class DataboysSentimentLexiconFilter extends SimpleBatchFilter {
 
-
     private List<String> sentimentWords = new ArrayList<>();
 
     public DataboysSentimentLexiconFilter() throws FileNotFoundException {

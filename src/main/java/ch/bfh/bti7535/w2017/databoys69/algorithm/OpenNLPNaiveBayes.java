@@ -6,16 +6,12 @@ import opennlp.tools.util.*;
 import weka.core.Instances;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.StringTokenizer;
 
 /**
  * @author databoys69
- * Implementation of a Naive Bayes algorithm with the OpenNLP library
+ * Implementation of a Naive Bayes algorithm with the OpenNLP library.
  */
 public class OpenNLPNaiveBayes {
 
@@ -89,6 +85,9 @@ public class OpenNLPNaiveBayes {
             System.out.println("*** DATABOYS 69 OPEN NLP NAIVE BAYES ***");
             System.out.println("Number of documents: " + evaluator.getDocumentCount());
             System.out.println("Accuracy: " + (evaluator.getAccuracy() * 100));
+            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+            System.out.println();
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }

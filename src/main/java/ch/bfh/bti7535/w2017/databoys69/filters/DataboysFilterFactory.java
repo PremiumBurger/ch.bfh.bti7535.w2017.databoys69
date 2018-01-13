@@ -19,7 +19,7 @@ public class DataboysFilterFactory {
      * Creates a string to vector filter and applies our
      * own @{@link DataboysStopWordHandler} to it.
      * @param train training data
-     * @return vector
+     * @return filter
      */
     public static Filter buildStringToVectorFilter(Instances train) throws Exception {
         StringToWordVector vector = new StringToWordVector();
@@ -31,6 +31,12 @@ public class DataboysFilterFactory {
         return vector;
     }
 
+    /**
+     * Creates a filter to reduce the number of attributes
+     * for the @{@link DataboysNaiveBayes} to look over.
+     * @param train training data
+     * @return filter
+     */
     public static Filter buildAttributeSelectionFilter(Instances train) throws Exception {
         AttributeSelection selectionFilter = new AttributeSelection();
         selectionFilter.setInputFormat(train);
@@ -39,6 +45,12 @@ public class DataboysFilterFactory {
         return selectionFilter;
     }
 
+    /**
+     * We tried to weight positive and negative sentiment words,
+     * but the filter affected the result negatively.
+     * @param instances training data
+     * @return filter
+     */
     public static Filter buildSentimentLexiconFilter(Instances instances) throws Exception {
         DataboysSentimentLexiconFilter lexiconFilter = new DataboysSentimentLexiconFilter();
         lexiconFilter.setInputFormat(instances);

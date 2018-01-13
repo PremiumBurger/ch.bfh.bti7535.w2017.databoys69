@@ -1,8 +1,6 @@
 package ch.bfh.bti7535.w2017.databoys69.algorithm;
 
-import ch.bfh.bti7535.w2017.databoys69.filters.DataboysDictionary;
 import ch.bfh.bti7535.w2017.databoys69.sentiwordnet.SentiwordDictionary;
-import weka.core.Instance;
 import weka.core.Instances;
 
 import java.io.BufferedReader;
@@ -74,6 +72,9 @@ public class DataboysBaseLineWeighted implements Runnable {
             System.out.println("Number of reviews: " + numberOfReviews);
             System.out.println("Number of correct classified reviews: " + numberOfCorrectClassifiedReviews);
             System.out.println("Accuracy: " + percentage + "%");
+            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+            System.out.println();
+            System.out.println();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -38,5 +38,7 @@ public class DataboysEvaluator {
         System.out.println("*** NAIVE BAYES ALGORITHM ***");
         System.out.println("Summary: " + eval.toSummaryString());
         System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        System.out.println();
+        System.out.println();
     }
 }
