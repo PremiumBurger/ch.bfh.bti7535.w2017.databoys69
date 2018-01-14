@@ -1,11 +1,17 @@
 # Databoys69 • Data Science (BTI7535)
 
-This project was realized for the data science course of the Bern Universitiy of Applied Sciences.
+This project was realized for the data science course of the Bern University of Applied Sciences.
 
 ## Authors
 * Yves Beutler
 * Sascha Wittwer
 * Cédric von Allmen
+
+## Tech Stack
+* **Maven** `v3` [Doc](http://maven.apache.org/guides/)
+* **WEKA** `v3.8.0` [Doc](https://weka.wikispaces.com/)
+* **Apache OpenNLP** `v1.8.3` [Doc](https://opennlp.apache.org/)
+
 
 
 ## Run it!
@@ -16,6 +22,12 @@ The project ist based on maven. To run the project make sure maven is installed 
 The entry point (main class) of the application can be found in this class:
 
 ```ch.bfh.bti7535.w2017.databoys69.App```
+
+Run the program in console as follows: 
+
+```mvn exec:java```
+
+or run it in your preferred IDE.
 
 If you run this class, several task will be executed:
 * Baseline algorithm (unweighted) 
