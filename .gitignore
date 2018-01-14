@@ -3,6 +3,7 @@
 *.war
 *.ear
 *.iml
+*.bin
 
 .settings
 .project

@@ -29,8 +29,7 @@ public class App {
 
         // launch open nlp
         OpenNLPNaiveBayes openNLPNaiveBayes = new OpenNLPNaiveBayes();
-        openNLPNaiveBayes.train();
-        openNLPNaiveBayes.test(file);
+        openNLPNaiveBayes.run();
 
         // launch Naive Bayes
         DataboysNaiveBayes bayes = new DataboysNaiveBayes(file);

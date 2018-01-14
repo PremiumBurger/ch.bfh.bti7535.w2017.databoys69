@@ -1,5 +1,9 @@
 package ch.bfh.bti7535.w2017.databoys69.algorithm;
 
+import ch.bfh.bti7535.w2017.databoys69.filters.OpenNlpStemFeature;
+import ch.bfh.bti7535.w2017.databoys69.filters.OpenNlpStopWordFeature;
+import opennlp.tools.cmdline.doccat.DoccatEvaluationErrorListener;
+import opennlp.tools.cmdline.doccat.DoccatFineGrainedReportListener;
 import opennlp.tools.doccat.*;
 import opennlp.tools.ml.naivebayes.NaiveBayesTrainer;
 import opennlp.tools.util.*;
@@ -104,6 +108,53 @@ public class OpenNLPNaiveBayes {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    public void run(){
+        // load training file
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        File trainingData = new File(classLoader.getResource("openNLP_training.txt").getFile());
+
+        DoccatModel model;
+        InputStreamFactory dataIn;
+        try {
+            dataIn = new MarkableFileInputStreamFactory(trainingData);
+            ObjectStream<String> lineStream =
+                    new PlainTextByLineStream(dataIn, "UTF-8");
+            ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
+
+
+            TrainingParameters params = new TrainingParameters();
+            params.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
+            params.put(TrainingParameters.ALGORITHM_PARAM, NaiveBayesTrainer.NAIVE_BAYES_VALUE);
+
+            DoccatFactory factory = new DoccatFactory();
+
+            // Add features
+            FeatureGenerator[] features = new FeatureGenerator[2];
+            features[0] = new OpenNlpStopWordFeature();
+            features[1] = new OpenNlpStemFeature();
+            factory.setFeatureGenerators(features);
+
+            // Create validator and evaluate with 10 folds
+            DoccatEvaluationMonitor listener = new DoccatFineGrainedReportListener();
+            DoccatCrossValidator validator = new DoccatCrossValidator("en", params, factory, listener);
+
+            validator.evaluate(sampleStream, 10);
+
+            System.out.println("*** NAIVE BAYES (OpenNLP) ALGORITHM ***");
+            System.out.println();
+            System.out.println("Number of reviews: " + validator.getDocumentCount());
+            System.out.println("Accuracy: " + (validator.getDocumentAccuracy() * 100));
+            System.out.println();
+            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+            System.out.println();
+        }
+        catch (IOException e) {
+            // Failed to read or parse training data, training failed
+            e.printStackTrace();
         }
     }
 }
