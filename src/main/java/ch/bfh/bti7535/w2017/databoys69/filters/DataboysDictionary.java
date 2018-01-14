@@ -1,5 +1,7 @@
 package ch.bfh.bti7535.w2017.databoys69.filters;
 
+import ch.bfh.bti7535.w2017.databoys69.App;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,9 +33,11 @@ public class DataboysDictionary {
             String filePos = classLoader.getResource("positiveWords.txt").getFile();
             String fileNeg = classLoader.getResource("negativeWords.txt").getFile();
 
-            // remove leading slash
-            filePos = filePos.substring(1);
-            fileNeg = fileNeg.substring(1);
+            // remove leading slash on windows
+            if (!App.isLinuxOs) {
+                filePos = filePos.substring(1);
+                fileNeg = fileNeg.substring(1);
+            }
 
             positiveWords = Files.lines(Paths.get(filePos)).collect(Collectors.toList());
             negativeWords = Files.lines(Paths.get(fileNeg)).collect(Collectors.toList());

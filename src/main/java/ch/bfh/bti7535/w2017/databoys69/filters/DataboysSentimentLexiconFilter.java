@@ -1,6 +1,7 @@
 package ch.bfh.bti7535.w2017.databoys69.filters;
 
 import ch.bfh.bti7535.w2017.databoys69.App;
+import ch.bfh.bti7535.w2017.databoys69.algorithm.DataboysNaiveBayes;
 import weka.core.*;
 import weka.filters.SimpleBatchFilter;
 
@@ -11,6 +12,13 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * @author databoys69
+ * This filter is currently not in use.
+ *
+ * Idea: The filter should weight pos/neg words to make often
+ * used seniment word more important for the analysis
+ */
 public class DataboysSentimentLexiconFilter extends SimpleBatchFilter {
 
     private List<String> sentimentWords = new ArrayList<>();
@@ -70,6 +78,8 @@ public class DataboysSentimentLexiconFilter extends SimpleBatchFilter {
             }
 
             result.add(new DenseInstance(instance));
+
+            // TODO: Implement logic to weight sentimental words (pos/neg)
 
         }
         return result;

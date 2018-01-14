@@ -1,5 +1,6 @@
 package ch.bfh.bti7535.w2017.databoys69.filters;
 
+import ch.bfh.bti7535.w2017.databoys69.App;
 import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.stemmer.PorterStemmer;
 
@@ -28,8 +29,10 @@ public class OpenNlpStopWordFeature implements FeatureGenerator {
 
             String fileStopWords = classLoader.getResource("stopwords.txt").getFile();
 
-            // remove leading slash
-            fileStopWords = fileStopWords.substring(1);
+            // remove leading slash on windows
+            if (!App.isLinuxOs) {
+                fileStopWords = fileStopWords.substring(1);
+            }
 
             stopWords = Files.lines(Paths.get(fileStopWords)).collect(Collectors.toList());
 

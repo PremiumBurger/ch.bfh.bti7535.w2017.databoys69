@@ -13,8 +13,16 @@ import java.io.File;
  * movie reviews into positive or negative reviews.
  */
 public class App {
-    public static void main( String[] args ) {
 
+    /**
+     * Used to troubleshoot with leading slashes
+     */
+    public static boolean isLinuxOs = "Linux".equals(System.getProperty("os.name"));
+
+    /**
+     * Main runner class for the algorithms
+     */
+    public static void main( String[] args ) {
         // load resource file
         ClassLoader classLoader = new App().getClass().getClassLoader();
         File file = new File(classLoader.getResource("movie-reviews.arff").getFile());

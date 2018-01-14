@@ -16,6 +16,8 @@ package ch.bfh.bti7535.w2017.databoys69.sentiwordnet;//    Copyright 2013 Petter
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import ch.bfh.bti7535.w2017.databoys69.App;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,7 +36,12 @@ public class SentiwordDictionary {
 
         ClassLoader clsLoader = this.getClass().getClassLoader();
 
-        String pathToSWN = clsLoader.getResource("SentiWordNet.txt").getFile().substring(1);
+        String pathToSWN = clsLoader.getResource("SentiWordNet.txt").getFile();
+
+        // remove leading slash on windows
+        if (!App.isLinuxOs) {
+            pathToSWN = pathToSWN.substring(1);
+        }
 
         // This is our main dictionary representation
         dictionary = new HashMap<>();
